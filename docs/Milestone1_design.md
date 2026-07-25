@@ -80,4 +80,6 @@ Just start the application class. Create and initialize it and get it running.
 
 ## Why did we make these decisions: 
 
-We want the renderer to be well designed, this means that there will be an application that gets created and run and that will handle everything, logging is very useful so we have clear idea of what was happening when things went wrong or even or performance. Cmake is pretty standard for project builds. 
+We want the renderer to be well designed, this means that there will be an application that gets 
+created and run and that will handle everything, logging is very useful so we have clear idea of what was 
+happening when things went wrong or even or performance. Cmake is pretty standard for project builds. 
