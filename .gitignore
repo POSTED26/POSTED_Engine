@@ -1,0 +1,58 @@
+# ==============================================================================
+# 1. CMake & Build Directories
+# ==============================================================================
+# Ignore the entire build output directories where object files and binaries live
+[Bb]uild/
+build-*/
+out/
+bin/
+
+# Specific CMake artifact tracking prevention
+CMakeFiles/
+CMakeCache.txt
+CMakeScripts/
+CMakeLists.txt.user*
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+Testing/
+
+# ==============================================================================
+# 2. Compiled Binaries and Object Files (C++ Specific)
+# ==============================================================================
+# Prerequisites
+*.d
+
+# Object files
+*.o
+*.obj
+*.lo
+*.slo
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Static and Dynamic Libraries
+*.lib
+*.a
+*.la
+*.lai
+*.so
+*.so.*
+*.dylib
+*.dll
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Debug symbols & information
+*.pdb
+*.ilk
+*.dwo
+
+.vs/
+*.user
