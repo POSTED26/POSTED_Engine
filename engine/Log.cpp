@@ -13,7 +13,7 @@ void Log::Write(const std::string& level, const std::string& message)
 }
 
 
-void Log::Info(const std::string & message)
+void Log::Info(const std::string& message)
 {
 	Write("INFO" ,message);
 }
