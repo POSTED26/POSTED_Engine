@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(POSTED_Engine LANGUAGES CXX)
+project(POSTED_Engine LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -26,10 +26,19 @@ target_sources(${PROJECT_NAME}
 		"engine/Log.cpp" 
 		"engine/PostedEngine.h"
 		"engine/PostedEngine.cpp" 
-		"engine/Window.h" 
-		"engine/Window.cpp")
+		"Window/Window.h" 
+		"Window/Window.cpp" 
+		"Renderer/Renderer.h"
+		"Renderer/Renderer.cpp"
+		"external/GLAD/src/gl.c"
+)
 
 target_link_libraries(${PROJECT_NAME}
 	PRIVATE
 		glfw
+)
+
+target_include_directories(${PROJECT_NAME}
+	PRIVATE
+		external/GLAD/include
 )

@@ -7,6 +7,6 @@ Goals
 Features  
 
 Current milestone 
-Milestone 1
+Milestone 3 Renderer class creation.
 
 Build instructions 
