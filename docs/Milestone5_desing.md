@@ -37,3 +37,11 @@ Add in the logic for reading the shader files
 compile and link the shader code
 bind the shader
 the result should be the same as before. 
+
+## Modifications to the original plan.
+Added a shader library class to manage the shader objects. 
+Storing shaders in a unordered_map for better insert and recall. 
+shaders are created in the init of shader library and ready to use in the renderer.
+probably handle the compilation of the shaders in a better way later to not front load the compile times when there are more shaders later.
+
+The reponsibility of the shader library class is shaders and renderer class owns shader library.
