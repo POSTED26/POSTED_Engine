@@ -47,6 +47,8 @@ target_sources(${PROJECT_NAME}
 		"Renderer/IndexBuffer.cpp"
 		"Renderer/VertexArray.h"
 		"Renderer/VertexArray.cpp"
+		"Renderer/Texture.h"
+		"Renderer/Texture.cpp"
 		"external/GLAD/src/gl.c"
 )
 

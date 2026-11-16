@@ -13,4 +13,5 @@ public:
 	void Unbind();
 	void Shutdown();
 	// uniform functionality later
+	void setInt(const std::string& name, int value) const;
 };

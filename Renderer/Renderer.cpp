@@ -31,6 +31,7 @@ bool Renderer::Initialize()
     // layout creation
     layout.AddFloat(3); // pos
     layout.AddFloat(3); // color
+    layout.AddFloat(2); // texture coords
     
     
     /*
@@ -41,11 +42,11 @@ bool Renderer::Initialize()
 		-0.5f,  0.5f, 0.0f   // top left 
 	};*/
     float vertices[] = {
-        // pos              // color
-         0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f,// top right
-         0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // bottom right
-        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, // bottom left
-        -0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 0.0f,   // top left 
+        // pos              // color          // texture coords
+         0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   // top right
+         0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,   // bottom right
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,   // bottom left
+        -0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f    // top left 
     };
     /*
     float vertices[] = {
@@ -70,6 +71,13 @@ bool Renderer::Initialize()
     vao.AddVertexBuffer(vertexBuffer, layout);
     vao.SetIndexBuffer(indexBuffer);
 
+    // texture
+    texture.Initilize();
+    texture.Load("Resources/Textures/container.jpg");
+
+    // uniforms
+    shaderLibrary.Get("basic")->setInt("texture1", 0);
+
 	return true;
 }
 
@@ -93,7 +101,8 @@ void Renderer::Render()
     
     shaderLibrary.Get("basic")->Bind();
 
-    // colors?
+    // texture
+    texture.Activate();
 
   
     vao.Bind();

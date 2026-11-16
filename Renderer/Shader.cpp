@@ -122,6 +122,8 @@ void Shader::Unbind()
 {
 }
 
+
+
 void Shader::Shutdown()
 {
 	if (programID != 0)
@@ -129,4 +131,9 @@ void Shader::Shutdown()
 		glDeleteProgram(programID);
 		programID = 0;
 	}
+}
+
+void Shader::setInt(const std::string& name, int value) const
+{
+	glUniform1i(glGetUniformLocation(programID, name.c_str()), value);
 }
