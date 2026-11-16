@@ -104,6 +104,7 @@ bool Shader::Compile(const char* vertexPath, const char* fragPath)
 	glDeleteShader(vertex);
 	glDeleteShader(frag);
 
+
 	return true;
 }
 

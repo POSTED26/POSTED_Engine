@@ -15,7 +15,11 @@ set(GLFW_BUILD_INSTALL OFF CACHE BOOL "GLFW lib only")
 
 add_subdirectory("external/GLFW")
 
-file(COPY ${CMAKE_SOURCE_DIR}/Resources DESTINATION ${CMAKE_BINARY_DIR})
+add_custom_target(CopyResources ALL
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    "${CMAKE_SOURCE_DIR}/Resources"
+    "${CMAKE_BINARY_DIR}/Resources"
+)
 
 add_executable(${PROJECT_NAME})
 
@@ -35,8 +39,16 @@ target_sources(${PROJECT_NAME}
 		"Renderer/Shader.cpp"
 		"Renderer/ShaderLibrary.h"
 		"Renderer/ShaderLibrary.cpp"
+		"Renderer/VertexBuffer.h"
+		"Renderer/VertexBuffer.cpp"
+		"Renderer/VertexLayout.h"
+		"Renderer/VertexLayout.cpp"
+		"Renderer/IndexBuffer.h"
+		"Renderer/IndexBuffer.cpp"
+		"Renderer/VertexArray.h"
+		"Renderer/VertexArray.cpp"
 		"external/GLAD/src/gl.c"
-  )
+)
 
 target_link_libraries(${PROJECT_NAME}
 	PRIVATE
