@@ -52,6 +52,12 @@ target_sources(${PROJECT_NAME}
 		"external/GLAD/src/gl.c"
 		"Math/Vec2.h"
 		"Math/Vec2.cpp"
+		"Math/Vec3.h"
+		"Math/Vec3.cpp"
+		"Math/Vec4.h"
+		"Math/Vec4.cpp"
+		"Math/Mat4.h"
+		"Math/Mat4.cpp"
 )
 
 target_link_libraries(${PROJECT_NAME}

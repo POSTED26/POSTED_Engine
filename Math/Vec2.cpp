@@ -26,7 +26,12 @@ Vec2 Vec2::operator*(float scalar) const
 
 float Vec2::Length() const
 {
-	return std::sqrt(x * x + y * y);
+	return std::sqrt(LengthSquared());
+}
+
+float Vec2::LengthSquared() const
+{
+	return x * x + y * y;
 }
 
 Vec2 Vec2::Normalize() const

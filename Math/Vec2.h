@@ -15,6 +15,7 @@ struct Vec2
 	Vec2 operator*(float scalar) const;
 
 	float Length() const;
+	float LengthSquared() const;
 	Vec2 Normalize() const;
 	
 };
