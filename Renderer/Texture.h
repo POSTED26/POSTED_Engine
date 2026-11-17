@@ -12,6 +12,6 @@ public:
 	void Load(const char* imgPath);
 	void Initilize();
 	void Bind();
-	void Activate();
+	void Activate(unsigned int texNum);
 
 };

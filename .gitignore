@@ -56,3 +56,6 @@ Testing/
 
 .vs/
 *.user
+
+# texture files
+Resources/Textures

@@ -102,7 +102,7 @@ void Renderer::Render()
     shaderLibrary.Get("basic")->Bind();
 
     // texture
-    texture.Activate();
+    texture.Activate(0);
 
   
     vao.Bind();

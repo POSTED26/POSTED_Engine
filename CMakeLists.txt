@@ -50,6 +50,8 @@ target_sources(${PROJECT_NAME}
 		"Renderer/Texture.h"
 		"Renderer/Texture.cpp"
 		"external/GLAD/src/gl.c"
+		"Math/Vec2.h"
+		"Math/Vec2.cpp"
 )
 
 target_link_libraries(${PROJECT_NAME}

@@ -9,6 +9,7 @@
 
 void Texture::Load(const char* imgPath)
 {
+	stbi_set_flip_vertically_on_load(true);
 	data = stbi_load(imgPath, &width, &height, &nrChannels, 0);
 	if (data)
 	{
@@ -39,10 +40,10 @@ void Texture::Bind()
 	glBindTexture(GL_TEXTURE_2D, texture);
 }
 
-void Texture::Activate()
+void Texture::Activate(unsigned int texNum) // maybe pass in which texture you need like 0 for TEXTURE0, 1 for TEXTURE1
 {
 
 	// TODO: each tecure would utilize GL_TEXUTRE0 at this point, having more than one at a time doesnt work yet.
-	glActiveTexture(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0 + texNum);
 	Bind();
 }

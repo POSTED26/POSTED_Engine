@@ -29,6 +29,7 @@ These classes should only know about vertex/index information.
 
 
 ### Checklist
-
+Pass data into vbo and ebo, bind and pass data to gpu. create VAO then bind and connect everyting and draw. 
 
 ## Modifications to the original plan.
+I added Texture class to be able to load images, and bind to texture and then activate to be drawn. 
