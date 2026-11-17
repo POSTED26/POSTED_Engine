@@ -1,6 +1,9 @@
 #include "Mat4.h"
 #include <cmath>
 
+#include <iostream>
+#include <iomanip>
+
 Mat4::Mat4()
 {
 	for (int row = 0; row < 4; row++)
@@ -15,7 +18,7 @@ Mat4::Mat4()
 	}
 }
 
-Mat4::Mat4(float other[16])
+Mat4::Mat4(const float other[16])
 {
 	int index = 0;
 	for (int col = 0; col < 4; col++)
@@ -136,9 +139,8 @@ Mat4 Mat4::Transpose() const
 	return result;
 }
 
-Mat4 Mat4::Inverse() const
+bool Mat4::Inverse(Mat4& result) const
 {
-	float result[16];
 
 	// 2x2 sub-determinants for the top two rows (rows 0 and 1)
 	float s0 = data[0] * data[5] - data[4] * data[1];
@@ -167,25 +169,96 @@ Mat4 Mat4::Inverse() const
 	float invDet = 1.0f / det;
 
 	// Compute the transposed cofactor (adjugate) matrix multiplied by 1/det
-	result[0] = (data[5] * c5 - data[6] * c4 + data[7] * c3) * invDet;
-	result[1] = (-data[1] * c5 + data[2] * c4 - data[3] * c3) * invDet;
-	result[2] = (data[13] * s5 - data[14] * s4 + data[15] * s3) * invDet;
-	result[3] = (-data[9] * s5 + data[10] * s4 - data[11] * s3) * invDet;
+	result.data[0] = (data[5] * c5 - data[6] * c4 + data[7] * c3) * invDet;
+	result.data[1] = (-data[1] * c5 + data[2] * c4 - data[3] * c3) * invDet;
+	result.data[2] = (data[13] * s5 - data[14] * s4 + data[15] * s3) * invDet;
+	result.data[3] = (-data[9] * s5 + data[10] * s4 - data[11] * s3) * invDet;
 
-	result[4] = (-data[4] * c5 + data[6] * c2 - data[7] * c1) * invDet;
-	result[5] = (data[0] * c5 - data[2] * c2 + data[3] * c1) * invDet;
-	result[6] = (-data[12] * s5 + data[14] * s2 - data[15] * s1) * invDet;
-	result[7] = (data[8] * s5 - data[10] * s2 + data[11] * s1) * invDet;
+	result.data[4] = (-data[4] * c5 + data[6] * c2 - data[7] * c1) * invDet;
+	result.data[5] = (data[0] * c5 - data[2] * c2 + data[3] * c1) * invDet;
+	result.data[6] = (-data[12] * s5 + data[14] * s2 - data[15] * s1) * invDet;
+	result.data[7] = (data[8] * s5 - data[10] * s2 + data[11] * s1) * invDet;
 
-	result[8] = (data[4] * c4 - data[5] * c2 + data[7] * c0) * invDet;
-	result[9] = (-data[0] * c4 + data[1] * c2 - data[3] * c0) * invDet;
-	result[10] = (data[12] * s4 - data[13] * s2 + data[15] * s0) * invDet;
-	result[11] = (-data[8] * s4 + data[9] * s2 - data[11] * s0) * invDet;
+	result.data[8] = (data[4] * c4 - data[5] * c2 + data[7] * c0) * invDet;
+	result.data[9] = (-data[0] * c4 + data[1] * c2 - data[3] * c0) * invDet;
+	result.data[10] = (data[12] * s4 - data[13] * s2 + data[15] * s0) * invDet;
+	result.data[11] = (-data[8] * s4 + data[9] * s2 - data[11] * s0) * invDet;
 
-	result[12] = (-data[4] * c3 + data[5] * c1 - data[6] * c0) * invDet;
-	result[13] = (data[0] * c3 - data[1] * c1 + data[2] * c0) * invDet;
-	result[14] = (-data[12] * s3 + data[13] * s1 - data[14] * s0) * invDet;
-	result[15] = (data[8] * s3 - data[9] * s1 + data[10] * s0) * invDet;
+	result.data[12] = (-data[4] * c3 + data[5] * c1 - data[6] * c0) * invDet;
+	result.data[13] = (data[0] * c3 - data[1] * c1 + data[2] * c0) * invDet;
+	result.data[14] = (-data[12] * s3 + data[13] * s1 - data[14] * s0) * invDet;
+	result.data[15] = (data[8] * s3 - data[9] * s1 + data[10] * s0) * invDet;
 
-	return Mat4(result);
+	return true;
+}
+
+Mat4 Mat4::Scale(float scale)
+{
+	Mat4 result = Mat4();
+	result.At(0, 0) = scale;
+	result.At(1, 1) = scale;
+	result.At(2, 2) = scale;
+	return result;
+}
+
+Mat4 Mat4::Scale(const Vec3& scale)
+{
+	Mat4 result = Mat4();
+	result.At(0, 0) = scale.x;
+	result.At(1, 1) = scale.y;
+	result.At(2, 2) = scale.z;
+	return result;
+}
+
+Mat4 Mat4::Translation(const Vec3& position)
+{
+	Mat4 result = Mat4();
+	result.At(0, 3) = position.x;
+	result.At(1, 3) = position.y;
+	result.At(2, 3) = position.z;
+	return result;
+}
+
+Mat4 Mat4::RotateX(float angle)
+{
+	Mat4 result = Mat4();
+	result.At(1, 1) = std::cos(angle);
+	result.At(1, 2) = -std::sin(angle);
+	result.At(2, 1) = std::sin(angle);
+	result.At(2, 2) = std::cos(angle);
+	return result;
+}
+
+Mat4 Mat4::RotateY(float angle)
+{
+	Mat4 result = Mat4();
+	result.At(0, 0) = std::cos(angle);
+	result.At(0, 2) = std::sin(angle);
+	result.At(2, 0) = -std::sin(angle);
+	result.At(2, 2) = std::cos(angle);
+	return result;
+}
+
+Mat4 Mat4::RotateZ(float angle)
+{
+	Mat4 result = Mat4();
+	result.At(0, 0) = std::cos(angle);
+	result.At(0, 1) = -std::sin(angle);
+	result.At(1, 0) = std::sin(angle);
+	result.At(1, 1) = std::cos(angle);
+	return result;
+}
+
+
+void Mat4::Print() const
+{
+	for (int row = 0; row < 4; row++)
+	{
+		for (int col = 0; col < 4; col++)
+		{
+			std::cout << std::setw(10) << At(row, col) << " ";
+		}
+
+		std::cout << '\n';
+	}
 }
