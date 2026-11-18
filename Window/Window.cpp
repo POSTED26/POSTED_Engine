@@ -4,6 +4,7 @@
 #include "../engine/Log.h"
 #include <iostream>
 
+#include <glad/gl.h>
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
@@ -27,6 +28,10 @@ bool Window::Initialize()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
+
+	// callback for resize
+	glfwSetWindowUserPointer(window, this);
+	glfwSetFramebufferSizeCallback(window, FramebufferSizeCallback);
 
 	if (window == NULL)
 	{
@@ -76,6 +81,21 @@ int Window::GetWidth()
 int Window::GetHeight()
 {
 	return height;
+}
+
+bool Window::WasResized()
+{
+	return wasResized;
+}
+
+void Window::SetResized(bool resize)
+{
+	wasResized = resize;
+}
+
+void Window::FramebufferSizeCallback(GLFWwindow* window, int width, int height)
+{
+	glViewport(0, 0, width, height);
 }
 
 

@@ -10,6 +10,7 @@ class Window
 private:
 	int width;
 	int height;
+	bool wasResized;
 	std::string title;
 	GLFWwindow* window;
 public:
@@ -21,4 +22,9 @@ public:
 	void PollEvents();
 	int GetWidth();
 	int GetHeight();
+
+	bool WasResized();
+	void SetResized(bool resize);
+
+	static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
 };

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <iomanip>
 
+
 Mat4::Mat4()
 {
 	for (int row = 0; row < 4; row++)
@@ -39,6 +40,11 @@ float& Mat4::At(int row, int col)
 float Mat4::At(int row, int col) const
 {
 	return data[col * 4 + row];
+}
+
+const float* Mat4::ptr() const
+{
+	return data;
 }
 
 Mat4 Mat4::Identity()
@@ -246,6 +252,55 @@ Mat4 Mat4::RotateZ(float angle)
 	result.At(0, 1) = -std::sin(angle);
 	result.At(1, 0) = std::sin(angle);
 	result.At(1, 1) = std::cos(angle);
+	return result;
+}
+
+Mat4 Mat4::Perspective(float fov, float aspect, float nearPlane, float farPlane)
+{
+	float fovRad = fov * (3.14159f / 180.0f);
+	float focal = 1 / (std::tan(fovRad / 2.0f));
+	//float farNear = farPlane - nearPlane;
+
+	Mat4 result = Mat4();
+	result.At(0, 0) = focal / aspect;
+	result.At(1, 1) = focal;
+	result.At(2, 2) = -(farPlane + nearPlane) / (farPlane - nearPlane);
+	result.At(2, 3) = -(2.0f * farPlane * nearPlane) / (farPlane - nearPlane);
+	result.At(3, 2) = -1.0f;
+	result.At(3, 3) = 0.0f;
+
+	return result;
+}
+
+Mat4 Mat4::Orthographic(float left, float right, float bottom, float top, float nearPlane, float farPlane)
+{
+	return Mat4();
+}
+
+Mat4 Mat4::LookAt(const Vec3& position, const Vec3& target, const Vec3& up)
+{
+	Vec3 forward = (position - target).Normalize();
+	//forward.Normalize();
+	Vec3 right = up.Cross(forward).Normalize();
+	//right.Normalize();
+	Vec3 camUp = forward.Cross(right);
+
+	Mat4 result = Mat4();
+	result.At(0, 0) = right.x;
+	result.At(0, 1) = right.y;
+	result.At(0, 2) = right.z;
+	result.At(0, 3) = -(right.Dot(position));
+
+	result.At(1, 0) = camUp.x;
+	result.At(1, 1) = camUp.y;
+	result.At(1, 2) = camUp.z;
+	result.At(1, 3) = -(camUp.Dot(position));
+
+	result.At(2, 0) = forward.x;
+	result.At(2, 1) = forward.y;
+	result.At(2, 2) = forward.z;
+	result.At(2, 3) = -(forward.Dot(position));
+
 	return result;
 }
 

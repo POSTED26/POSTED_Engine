@@ -33,7 +33,10 @@ bool Renderer::Initialize()
     layout.AddFloat(3); // color
     layout.AddFloat(2); // texture coords
     
-    
+    // gloval config
+    glEnable(GL_DEPTH_TEST);
+
+
     /*
 	float vertices[] = {
 		 0.5f,  0.5f, 0.0f,  // top right
@@ -43,10 +46,49 @@ bool Renderer::Initialize()
 	};*/
     float vertices[] = {
         // pos              // color          // texture coords
-         0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   // top right
-         0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,   // bottom right
-        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,   // bottom left
-        -0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f    // top left 
+         0.5f,  0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   //f top right
+         0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,   //f bottom right
+        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,   //f bottom left
+        -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,   //f top left 
+        /*
+        0.5f,  0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   //b top right
+         0.5f, -0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,   //b bottom right
+        -0.5f, -0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,   //b bottom left
+        -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f    //b top left 
+        */
+        /*
+        0.0f, 1.0f, 1.0f,
+        0.0f, 1.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+        0.0f, 0.0f, 1.0f,
+        */
+
+        0.5f,  0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   //r top right
+        0.5f, -0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,   //r bot right
+        0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f,   //r bot left
+        0.5f,  0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,   //r top right
+
+        -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f,  //back top right
+        -0.5f, -0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,  //back bot right
+        0.5f, -0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f,   //back bot left
+        0.5f,  0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,   //back top left
+
+        -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f,  //l top right
+        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,  //l bot right
+        -0.5f, -0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+
+        0.5f,  0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+        0.5f,  0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+
+        0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+        0.5f, -0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+
+
     };
     /*
     float vertices[] = {
@@ -55,8 +97,18 @@ bool Renderer::Initialize()
         0.5f, -0.5f, 0.0f
     };*/
 	unsigned int indices[] = {  // note that we start from 0!
-		0, 1, 3,  // first Triangle
-		1, 2, 3   // second Triangle
+		0, 1, 3,  //f first Triangle
+		1, 2, 3,   //f second Triangle
+        4, 5, 7,
+        5, 6, 7,
+        8, 9, 11,
+        9, 10, 11,
+        12, 13, 15,
+        13, 14, 15,
+        16, 17, 19,
+        17, 18, 19,
+        20, 21, 23,
+        21, 22, 23
 	};
 
     // vao, vbo, ebo creation
@@ -95,20 +147,47 @@ void Renderer::Render()
 {
 	
 	glClearColor(0.1,0.1,0.5,1.0);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // drawing
     
     shaderLibrary.Get("basic")->Bind();
+
+    Mat4 view = Mat4::LookAt(Vec3(0.0f, 0.0f, -3.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
+    Mat4 proj = Mat4::Perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0f);
+    Mat4 model = Mat4();
+    model = model * Mat4::Scale(Vec3(2.0f,2.0f,2.0f)) * Mat4::Translation(Vec3(0.0f, 0.0f, 1.0f)) * Mat4::RotateX(0.8f) * Mat4::RotateY(1.0f);
+
+    shaderLibrary.Get("basic")->setMat4("view", view);
+    shaderLibrary.Get("basic")->setMat4("projection", proj);
+    shaderLibrary.Get("basic")->setMat4("model", model);
+
+
+
 
     // texture
     texture.Activate(0);
 
   
     vao.Bind();
+    /*
+    for (int i = 0; i < 6; i++)
+    {
+        for (int j = 0; j < 6; j++)
+        {
+            for (int k = 0; k < 6; k++)
+            {
+                model = Mat4();
+                model = model * Mat4::Translation(Vec3(3.75f - (1.5f * (float)k), 3.75f - (1.5f * (float)j), 10.0f + (1.5f * (float)i)));
+                shaderLibrary.Get("basic")->setMat4("model", model);
+                glDrawElements(GL_TRIANGLES, vao.GetIndexCount(), GL_UNSIGNED_INT, nullptr);
+            }
+        }
+    }*/
+
+    
     //glDrawArrays(GL_TRIANGLES, 0, 3);
     glDrawElements(GL_TRIANGLES, vao.GetIndexCount(), GL_UNSIGNED_INT, nullptr);
 
-
-
+ 
 }

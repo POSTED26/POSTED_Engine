@@ -14,6 +14,8 @@ public:
 	float& At(int row, int col);
 	float At(int row, int col) const;
 
+	const float* ptr() const;
+
 	static Mat4 Identity();
 
 	Mat4 operator+(const Mat4& other) const;
@@ -34,6 +36,10 @@ public:
 	static Mat4 RotateX(float angle);
 	static Mat4 RotateY(float angle);
 	static Mat4 RotateZ(float angle);
+
+	static Mat4 Perspective(float fov, float aspect, float nearPlane, float farPlane);
+	static Mat4 Orthographic(float left, float right, float bottom, float top, float nearPlane, float farPlane);
+	static Mat4 LookAt(const Vec3& position, const Vec3& target, const Vec3& up);
 
 	void Print() const;
 };
