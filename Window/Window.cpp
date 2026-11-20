@@ -83,6 +83,11 @@ int Window::GetHeight()
 	return height;
 }
 
+GLFWwindow* Window::GetNativeWindow() const
+{
+	return window;
+}
+
 bool Window::WasResized()
 {
 	return wasResized;

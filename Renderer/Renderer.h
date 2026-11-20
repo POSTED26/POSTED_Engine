@@ -5,6 +5,7 @@
 #include "IndexBuffer.h"
 #include "VertexArray.h"
 #include "Texture.h"
+#include "Camera.h"
 
 class Renderer
 {
@@ -19,7 +20,7 @@ private:
 public:
 	bool Initialize();
 	void Shutdown();
-	void Render();
+	void Render(const Camera& camera);
 
 
 };

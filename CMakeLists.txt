@@ -58,6 +58,8 @@ target_sources(${PROJECT_NAME}
 		"Math/Vec4.cpp"
 		"Math/Mat4.h"
 		"Math/Mat4.cpp"
+		"Renderer/Camera.h"
+		"Renderer/Camera.cpp"
 )
 
 target_link_libraries(${PROJECT_NAME}

@@ -22,6 +22,7 @@ public:
 	void PollEvents();
 	int GetWidth();
 	int GetHeight();
+	GLFWwindow* GetNativeWindow() const;
 
 	bool WasResized();
 	void SetResized(bool resize);

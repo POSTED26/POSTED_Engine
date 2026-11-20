@@ -7,6 +7,8 @@
 
 
 
+
+
 bool Renderer::Initialize()
 {
 	Log::Info("Initializing Renderer");
@@ -143,7 +145,7 @@ void Renderer::Shutdown()
 }
 
 
-void Renderer::Render()
+void Renderer::Render(const Camera& camera)
 {
 	
 	glClearColor(0.1,0.1,0.5,1.0);
@@ -153,10 +155,10 @@ void Renderer::Render()
     
     shaderLibrary.Get("basic")->Bind();
 
-    Mat4 view = Mat4::LookAt(Vec3(0.0f, 0.0f, -3.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
-    Mat4 proj = Mat4::Perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0f);
+    Mat4 view = camera.GetViewMatrix();  //Mat4::LookAt(Vec3(0.0f, 0.0f, -3.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
+    Mat4 proj = camera.GetProjectionMatrix(); //Mat4::Perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0f);
     Mat4 model = Mat4();
-    model = model * Mat4::Scale(Vec3(2.0f,2.0f,2.0f)) * Mat4::Translation(Vec3(0.0f, 0.0f, 1.0f)) * Mat4::RotateX(0.8f) * Mat4::RotateY(1.0f);
+    model = model;// *Mat4::Scale(Vec3(2.0f, 2.0f, 2.0f))* Mat4::Translation(Vec3(0.0f, 0.0f, 1.0f))* Mat4::RotateX(0.8f)* Mat4::RotateY(1.0f);
 
     shaderLibrary.Get("basic")->setMat4("view", view);
     shaderLibrary.Get("basic")->setMat4("projection", proj);
