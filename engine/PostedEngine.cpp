@@ -60,7 +60,7 @@ void PostedEngine::Shutdown()
 void PostedEngine::ProcessInput(float deltaTime)
 {
 	float moveSpeed = 5.0f * deltaTime;
-	float turnSpeed = 30.0f * deltaTime;
+	float turnSpeed = 60.0f * deltaTime;
 
 	if (glfwGetKey(window.GetNativeWindow(), GLFW_KEY_W) == GLFW_PRESS)
 		camera.MoveForward(moveSpeed);

@@ -123,6 +123,8 @@ bool Renderer::Initialize()
     //vao.SetIndexBuffer(indexBuffer);
 
     // texture
+
+
     texture.Initilize();
     texture.Load("Resources/Textures/container.jpg");
 

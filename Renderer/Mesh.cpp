@@ -14,6 +14,17 @@ struct VertexData
 	int pos;
 	int tex;
 	int normal;
+
+	bool operator<(const VertexData& other) const
+	{
+		if (pos != other.pos)
+			return pos < other.pos;
+
+		if (tex != other.tex)
+			return tex < other.tex;
+
+		return normal < other.normal;
+	}
 	//VertexData(int pos, int tex, int normal) : pos(pos), tex(tex), normal(normal) {};
 };
 
@@ -62,10 +73,21 @@ void Mesh::LoadObjFile(const char* meshPath)
 	//size_t num_tri{};
 	//size_t num_index{};
 	
+	for (const auto& shape : result.shapes)
+	{
+		for (unsigned char faceSize : shape.mesh.num_face_vertices)
+		{
+			if (faceSize != 3)
+			{
+				Log::Error("Found a face that is not a triangle!");
+			}
+		}
+	}
+
 
 	std::vector<int> idx;
 	std::vector<float> vertexArray;
-	std::map<int, VertexData> vertices;
+	std::map<VertexData, int> vertices;
 	for (const auto& shape : result.shapes)
 	{
 		//num_tri += shape.mesh.num_face_vertices.size();
@@ -78,28 +100,29 @@ void Mesh::LoadObjFile(const char* meshPath)
 		for (const auto& index : shape.mesh.indices)
 		{
 			// check if map is empty if it is then add in
-			auto [it, inserted] = vertices.try_emplace(key, 
-				VertexData{ index.position_index, index.texcoord_index, index.normal_index });
+			auto [it, inserted] = vertices.try_emplace(
+				VertexData{ index.position_index, index.texcoord_index, index.normal_index }, key);
 			
 			if (!inserted)
 			{
 				// add key to idx
-				idx.push_back(it->first);
+				idx.push_back(it->second);
 			}
 
 			// if inserted increase key,only want to do it if inserted. 
 			if (inserted)
 			{
-				key++;
+				
 				idx.push_back(key);
-				vertexArray.push_back(result.attributes.positions[it->second.pos * 3]);
-				vertexArray.push_back(result.attributes.positions[it->second.pos * 3 + 1]);
-				vertexArray.push_back(result.attributes.positions[it->second.pos * 3 + 2]);
-				vertexArray.push_back(result.attributes.positions[it->second.tex * 2]);
-				vertexArray.push_back(result.attributes.positions[it->second.tex * 2 + 1]);
-				vertexArray.push_back(result.attributes.positions[it->second.normal * 3]);
-				vertexArray.push_back(result.attributes.positions[it->second.normal * 3 + 1]);
-				vertexArray.push_back(result.attributes.positions[it->second.normal * 3 + 2]);
+				vertexArray.push_back(result.attributes.positions[it->first.pos * 3]);
+				vertexArray.push_back(result.attributes.positions[it->first.pos * 3 + 1]);
+				vertexArray.push_back(result.attributes.positions[it->first.pos * 3 + 2]);
+				vertexArray.push_back(result.attributes.texcoords[it->first.tex * 2]);
+				vertexArray.push_back(result.attributes.texcoords[it->first.tex * 2 + 1]);
+				vertexArray.push_back(result.attributes.normals[it->first.normal * 3]);
+				vertexArray.push_back(result.attributes.normals[it->first.normal * 3 + 1]);
+				vertexArray.push_back(result.attributes.normals[it->first.normal * 3 + 2]);
+				key++;
 			}
 		}
 		
@@ -109,14 +132,23 @@ void Mesh::LoadObjFile(const char* meshPath)
 		*/
 
 	}
-
+	/*
 	Log::Info("Index size: " + std::to_string(idx.size()));
 	Log::Info("Vertex: " + std::to_string(vertexArray.at(0)) + std::to_string(vertexArray.at(1))
 		+ std::to_string(vertexArray.at(2)));
+		*/
+	Log::Info("Index count: " + std::to_string(idx.size()));
+	Log::Info("Unique vertex count: " + std::to_string(vertexArray.size() / 8));
+	unsigned int maxIndex = 0;
 
-	//Log::Info("Shapes: " + std::to_string(result.shapes.size()));
-	//Log::Info("Triangles: " + std::to_string(num_tri));
-	//Log::Info("Indicies: " + std::to_string(num_index));
+	for (unsigned int index : idx)
+	{
+		if (index > maxIndex)
+			maxIndex = index;
+	}
+
+	Log::Info("Maximum index: " + std::to_string(maxIndex));
+	
 
 	auto indexBuffer = std::make_unique<unsigned int[]>(idx.size());
 	auto vertexBuff = std::make_unique<float[]>(vertexArray.size());
