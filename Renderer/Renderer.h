@@ -6,6 +6,7 @@
 #include "VertexArray.h"
 #include "Texture.h"
 #include "Camera.h"
+#include "Mesh.h"
 
 class Renderer
 {
@@ -16,6 +17,7 @@ private:
 	VertexArray vao;
     ShaderLibrary shaderLibrary;
 	Texture	texture;
+	Mesh mesh;
     unsigned int VAO, EBO;
 public:
 	bool Initialize();

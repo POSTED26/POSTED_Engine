@@ -1,7 +1,12 @@
 #include "Camera.h"
 #include "../engine/Log.h"
 
+/*
+TODO:
 
+Use mouse input for camera rotaions
+
+*/
 
 Camera::Camera(float fov, float aspectRatio, float nearPlane, float farPlane) 
 	: fov(fov), aspectRatio(aspectRatio), nearPlane(nearPlane), farPlane(farPlane)
@@ -15,7 +20,7 @@ Camera::Camera(float fov, float aspectRatio, float nearPlane, float farPlane)
 
 void Camera::MoveForward(float amount)
 {
-	Log::Info("Moving forward: " + std::to_string(amount));
+	//Log::Info("Moving forward: " + std::to_string(amount));
 	position = position + front * amount;
 }
 

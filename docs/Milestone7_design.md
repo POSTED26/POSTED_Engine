@@ -34,3 +34,5 @@ They work. I will test the output.
 ## Modifications to the original plan.
 This is currently scoped for just the math library but I might add a transform class, I dont think it is needed yet.
 I might add some projections so show a cube.
+
+I also added a camera class which is basically a wrapper around my Mat4 perspective and LookAt functoins. It also has some basic movement

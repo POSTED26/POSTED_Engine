@@ -60,7 +60,7 @@ target_sources(${PROJECT_NAME}
 		"Math/Mat4.cpp"
 		"Renderer/Camera.h"
 		"Renderer/Camera.cpp"
-)
+ "Renderer/Mesh.h" "Renderer/Mesh.cpp")
 
 target_link_libraries(${PROJECT_NAME}
 	PRIVATE

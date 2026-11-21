@@ -27,6 +27,10 @@ bool Renderer::Initialize()
         std::string(reinterpret_cast<const char*>(version))
     );
 
+    // gloval config
+    glEnable(GL_DEPTH_TEST);
+
+
     // Init shader Library. Complies all shaders and loads to a map
     shaderLibrary.Initialize();
 	
@@ -35,8 +39,7 @@ bool Renderer::Initialize()
     layout.AddFloat(3); // color
     layout.AddFloat(2); // texture coords
     
-    // gloval config
-    glEnable(GL_DEPTH_TEST);
+    
 
 
     /*
@@ -52,19 +55,7 @@ bool Renderer::Initialize()
          0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,   //f bottom right
         -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,   //f bottom left
         -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,   //f top left 
-        /*
-        0.5f,  0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   //b top right
-         0.5f, -0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,   //b bottom right
-        -0.5f, -0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,   //b bottom left
-        -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f    //b top left 
-        */
-        /*
-        0.0f, 1.0f, 1.0f,
-        0.0f, 1.0f, 0.0f,
-        1.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 1.0f,
-        */
-
+ 
         0.5f,  0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   //r top right
         0.5f, -0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,   //r bot right
         0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f,   //r bot left
@@ -113,17 +104,23 @@ bool Renderer::Initialize()
         21, 22, 23
 	};
 
+    // Mesh setup
+    //mesh.Initialize(vertices, sizeof(vertices), indices, sizeof(indices), layout);
+
+    mesh.LoadObjFile("Resources/Meshs/hornet.obj");
+
     // vao, vbo, ebo creation
-    vertexBuffer.Initialize(vertices, sizeof(vertices));
-    indexBuffer.Initialize(indices, sizeof(indices));
+
+    //vertexBuffer.Initialize(vertices, sizeof(vertices));
+    //indexBuffer.Initialize(indices, sizeof(indices));
 
     // createed vbo and ebo and unbound
     // create and bind vao then attach and re-bind vbo and ebo
     // dont unbind before you unbind vao
 	
-    vao.Initialize();
-    vao.AddVertexBuffer(vertexBuffer, layout);
-    vao.SetIndexBuffer(indexBuffer);
+    //vao.Initialize();
+    //vao.AddVertexBuffer(vertexBuffer, layout);
+    //vao.SetIndexBuffer(indexBuffer);
 
     // texture
     texture.Initilize();
@@ -138,9 +135,10 @@ bool Renderer::Initialize()
 void Renderer::Shutdown()
 {
 	Log::Info("Shutting down Renderer");
-    vao.Shutdown();
-    vertexBuffer.Shutdown();
-    indexBuffer.Shutdown();
+    //vao.Shutdown();
+    //vertexBuffer.Shutdown();
+    //indexBuffer.Shutdown();
+    mesh.Shutdown();
     shaderLibrary.Shutdown();
 }
 
@@ -164,32 +162,15 @@ void Renderer::Render(const Camera& camera)
     shaderLibrary.Get("basic")->setMat4("projection", proj);
     shaderLibrary.Get("basic")->setMat4("model", model);
 
-
-
-
     // texture
     texture.Activate(0);
 
   
-    vao.Bind();
-    /*
-    for (int i = 0; i < 6; i++)
-    {
-        for (int j = 0; j < 6; j++)
-        {
-            for (int k = 0; k < 6; k++)
-            {
-                model = Mat4();
-                model = model * Mat4::Translation(Vec3(3.75f - (1.5f * (float)k), 3.75f - (1.5f * (float)j), 10.0f + (1.5f * (float)i)));
-                shaderLibrary.Get("basic")->setMat4("model", model);
-                glDrawElements(GL_TRIANGLES, vao.GetIndexCount(), GL_UNSIGNED_INT, nullptr);
-            }
-        }
-    }*/
+    //vao.Bind();
+    mesh.Bind();
 
-    
     //glDrawArrays(GL_TRIANGLES, 0, 3);
-    glDrawElements(GL_TRIANGLES, vao.GetIndexCount(), GL_UNSIGNED_INT, nullptr);
+    glDrawElements(GL_TRIANGLES, mesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr);
 
  
 }
