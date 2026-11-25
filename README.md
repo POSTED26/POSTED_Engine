@@ -6,10 +6,10 @@ Educational rendering engine written in C++.
 Explore modern rendering techiques
 
 ### Features  
-Loging
-Mesh loading
-Handles vector and matrix operations 
-Basic lighting
+- Implemented my own Logging
+- Mesh loading
+- My own vector and matrix classes where I handle vertex and matrix operations
+- Basic lighting
 
 ### Current milestone 
 Milestone 9: lighting.
