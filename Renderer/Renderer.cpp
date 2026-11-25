@@ -160,8 +160,12 @@ void Renderer::Render(const Camera& camera)
 	
 	glClearColor(0.1,0.1,0.1,1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // move light
+    float xPos = std::cos(glfwGetTime());
+    float zPos = std::sin(glfwGetTime());
     
-    Vec3 lightPos = Vec3(-0.8f, 0.8f, -0.5f);
+    Vec3 lightPos = Vec3(xPos, 0.8f, zPos);
 
     // drawing
     
@@ -176,6 +180,7 @@ void Renderer::Render(const Camera& camera)
     shaderLibrary.Get("basic")->setMat4("projection", proj);
     shaderLibrary.Get("basic")->setMat4("model", model);
     shaderLibrary.Get("basic")->setVec3("lightPos", lightPos);
+    shaderLibrary.Get("basic")->setVec3("viewPos", camera.GetPosition());
 
 
     // texture

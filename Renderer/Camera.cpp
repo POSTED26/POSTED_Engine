@@ -55,3 +55,8 @@ Mat4 Camera::GetProjectionMatrix() const
 {
 	return Mat4::Perspective(fov, aspectRatio, nearPlane, farPlane);
 }
+
+Vec3 Camera::GetPosition() const
+{
+	return position;
+}

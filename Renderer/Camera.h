@@ -29,4 +29,5 @@ public:
 
 	Mat4 GetViewMatrix() const;
 	Mat4 GetProjectionMatrix() const;
+	Vec3 GetPosition() const;
 };
