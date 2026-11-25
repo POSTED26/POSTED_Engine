@@ -37,7 +37,8 @@ bool Renderer::Initialize()
     // layout creation
     layout.AddFloat(3); // pos
     layout.AddFloat(3); // color
-    layout.AddFloat(2); // texture coords
+    layout.AddFloat(3);
+    //layout.AddFloat(2); // texture coords
     
     
 
@@ -50,36 +51,36 @@ bool Renderer::Initialize()
 		-0.5f,  0.5f, 0.0f   // top left 
 	};*/
     float vertices[] = {
-        // pos              // color          // texture coords
-         0.5f,  0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   //f top right
-         0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,   //f bottom right
-        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,   //f bottom left
-        -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,   //f top left 
+        // pos              // color          // normals          // texture coords
+         0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, -1.0f, /* 1.0f, 1.0f,*/   //f top right
+         0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, -1.0f, /* 1.0f, 0.0f, */  //f bottom right
+        -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, -1.0f, /* 0.0f, 0.0f, */  //f bottom left
+        -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, -1.0f, /* 0.0f, 1.0f,*/   //f top left 
  
-        0.5f,  0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   //r top right
-        0.5f, -0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,   //r bot right
-        0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f,   //r bot left
-        0.5f,  0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,   //r top right
+        0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,/* 1.0f, 1.0f,*/   //r top right
+        0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, /*1.0f, 0.0f, */  //r bot right
+        0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,/* 0.0f, 0.0f,*/   //r bot left
+        0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, /*0.0f, 1.0f, */  //r top right
 
-        -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f,  //back top right
-        -0.5f, -0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,  //back bot right
-        0.5f, -0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f,   //back bot left
-        0.5f,  0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,   //back top left
+        -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, /*1.0f, 1.0f,*/  //back top right
+        -0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, /* 1.0f, 0.0f,*/  //back bot right
+        0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f,  0.0f, 0.0f, 1.0f, /* 0.0f, 0.0f, */  //back bot left
+        0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f,  0.0f, 0.0f, 1.0f,/* 0.0f, 1.0f,*/   //back top left
 
-        -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f,  //l top right
-        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,  //l bot right
-        -0.5f, -0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+        -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, -1.0f, 0.0f, 0.0f, /* 1.0f, 1.0f,*/  //l top right
+        -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, -1.0f, 0.0f, 0.0f, /* 1.0f, 0.0f,*/  //l bot right
+        -0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, -1.0f, 0.0f, 0.0f, /* 0.0f, 0.0f,*/
+        -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, -1.0f, 0.0f, 0.0f, /*0.0f, 1.0f,*/
 
-        0.5f,  0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
-        0.5f,  0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+        0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, /* 1.0f, 1.0f,*/
+        0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, /* 1.0f, 0.0f,*/
+        -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f,0.0f, 1.0f, 0.0f, /* 0.0f, 0.0f,*/
+        -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f,0.0f, 1.0f, 0.0f, /* 0.0f, 1.0f,*/
 
-        0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-        0.5f, -0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-        -0.5f, -0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+        0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, -1.0f, 0.0f,/* 1.0f, 1.0f,*/
+        0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, -1.0f, 0.0f,/* 1.0f, 0.0f,*/
+        -0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f,-1.0f, 0.0f,/* 0.0f, 0.0f,*/
+        -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f,-1.0f, 0.0f/* 0.0f, 1.0f,*/
 
 
     };
@@ -109,6 +110,8 @@ bool Renderer::Initialize()
 
     mesh.LoadObjFile("Resources/Meshs/hornet.obj");
 
+    light.Initialize(vertices, sizeof(vertices), indices, sizeof(indices), layout);
+
     // vao, vbo, ebo creation
 
     //vertexBuffer.Initialize(vertices, sizeof(vertices));
@@ -129,7 +132,14 @@ bool Renderer::Initialize()
     texture.Load("Resources/Textures/container.jpg");
 
     // uniforms
+    Vec3 lightColor = Vec3(1.0f, 1.0f, 1.0f);
+    shaderLibrary.Get("basic")->Bind();
     shaderLibrary.Get("basic")->setInt("texture1", 0);
+    shaderLibrary.Get("basic")->setVec3("lightColor", lightColor);
+    shaderLibrary.Get("basic")->setVec3("objectColor", Vec3(0.9352f, 0.8490f, 0.0017f));
+
+    shaderLibrary.Get("light")->Bind();
+    shaderLibrary.Get("light")->setVec3("lightColor", lightColor);
 
 	return true;
 }
@@ -148,8 +158,10 @@ void Renderer::Shutdown()
 void Renderer::Render(const Camera& camera)
 {
 	
-	glClearColor(0.1,0.1,0.5,1.0);
+	glClearColor(0.1,0.1,0.1,1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    Vec3 lightPos = Vec3(-0.8f, 0.8f, -0.5f);
 
     // drawing
     
@@ -158,21 +170,39 @@ void Renderer::Render(const Camera& camera)
     Mat4 view = camera.GetViewMatrix();  //Mat4::LookAt(Vec3(0.0f, 0.0f, -3.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
     Mat4 proj = camera.GetProjectionMatrix(); //Mat4::Perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0f);
     Mat4 model = Mat4();
-    model = model;// *Mat4::Scale(Vec3(2.0f, 2.0f, 2.0f))* Mat4::Translation(Vec3(0.0f, 0.0f, 1.0f))* Mat4::RotateX(0.8f)* Mat4::RotateY(1.0f);
+    model = model * Mat4::RotateY(1.5f);
 
     shaderLibrary.Get("basic")->setMat4("view", view);
     shaderLibrary.Get("basic")->setMat4("projection", proj);
     shaderLibrary.Get("basic")->setMat4("model", model);
+    shaderLibrary.Get("basic")->setVec3("lightPos", lightPos);
+
 
     // texture
     texture.Activate(0);
 
-  
+
     //vao.Bind();
     mesh.Bind();
 
     //glDrawArrays(GL_TRIANGLES, 0, 3);
     glDrawElements(GL_TRIANGLES, mesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr);
 
+    // light
+    shaderLibrary.Get("light")->Bind();
+
+    // light model view proj
+    Mat4 lightModel = Mat4() * Mat4::Translation(lightPos) * Mat4::Scale(Vec3(0.2f, 0.2f, 0.2f));
+
+    shaderLibrary.Get("light")->setMat4("view", view);
+    shaderLibrary.Get("light")->setMat4("projection", proj);
+    shaderLibrary.Get("light")->setMat4("model", lightModel);
+
+    
+
+ 
+
+    light.Bind();
+    glDrawElements(GL_TRIANGLES, light.GetIndexCount(), GL_UNSIGNED_INT, nullptr);
  
 }

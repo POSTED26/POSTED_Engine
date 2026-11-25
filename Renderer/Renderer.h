@@ -18,6 +18,7 @@ private:
     ShaderLibrary shaderLibrary;
 	Texture	texture;
 	Mesh mesh;
+	Mesh light;
     unsigned int VAO, EBO;
 public:
 	bool Initialize();

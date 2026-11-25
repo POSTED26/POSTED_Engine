@@ -32,7 +32,15 @@ bool ShaderLibrary::Initialize()
 		return false;
 	}
 
+	if (!Load("light", "Resources/Shaders/light.vs", "Resources/Shaders/light.fs"))
+	{
+		Log::Error("Failed to load light shader");
+		return false;
+	}
+
 	Log::Info("Successfully loaded shaders");
+
+
 	return true;
 }
 
