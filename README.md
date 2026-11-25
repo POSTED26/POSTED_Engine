@@ -2,11 +2,17 @@
 
 Educational rendering engine written in C++.  
 
-Goals  
+### Goals  
+Explore modern rendering techiques
 
-Features  
+###Features  
+Loging
+Mesh loading
+Handles vector and matrix operations 
+Basic lighting
 
-Current milestone 
-Milestone 3 Renderer class creation.
+###Current milestone 
+Milestone 9: lighting.
 
-Build instructions 
+###Build instructions 
+None yet.
